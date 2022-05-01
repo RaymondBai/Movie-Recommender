@@ -16,5 +16,13 @@ class ImdbSpider(scrapy.Spider):
     def parse_full_credits(self, response):
         actor_relative_paths = [a.attrib["href"] for a in response.css("td.primary_photo a")]
         for a in actor_relative_paths:
-            yield {"path": response.urljoin(a)}
+            yield scrapy.Request(response.urljoin(a), callback = self.parse_actor_page)
+    
+    def parse_actor_page(self, response):
+        # find actor name
+        actor_name = str(response.css('h1.header span.itemprop *::text')).split("data='")[-1].split("'")[0]
+        yield{"name":actor_name}
+        # find list of films
+        #for i in length(film_list):
+         #   yield {"actor": actor_name, "movie_or_TV_name": i}
 
