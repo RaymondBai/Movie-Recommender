@@ -6,7 +6,7 @@ import scrapy
 class ImdbSpider(scrapy.Spider):
     name = 'imdb_spider'
     
-    start_urls = ['https://www.imdb.com/title/tt8946378/']
+    start_urls = ['https://www.imdb.com/title/tt0106145/']
 
     def parse(self, response):
         to_append = response.css('a.ipc-metadata-list-item__icon-link').attrib['href']
@@ -28,5 +28,5 @@ class ImdbSpider(scrapy.Spider):
                 "actor": actor_name,
                 "movie_or_TV_name": film
                 }
-
+    
 
