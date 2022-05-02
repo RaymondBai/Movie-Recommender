@@ -22,13 +22,11 @@ class ImdbSpider(scrapy.Spider):
         # find actor name
         actor_name = str(response.css('h1.header span.itemprop ::text')).split("data='")[-1].split("'")[0]
         # find list of films
-        films = str(response.css('div.filmo-category-section div.filmo-row b a ::text')).split("data='")[-1].split("'")[0]
-        print("*****************")
-        print(len(films))
-        print(films)
-        yield {
-            "actor": actor_name,
-            "movie_or_TV_name": films
-        }
+        films = response.css('div.filmo-category-section div.filmo-row b a ::text').getall()
+        for film in films:
+            yield {
+                "actor": actor_name,
+                "movie_or_TV_name": film
+                }
 
 
